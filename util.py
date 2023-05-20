@@ -7,7 +7,7 @@ import PIL.Image
 import PIL.ImageChops
 import io
 import base64
-
+from tqdm import tqdm
 
 def download(url, filename, fake_headers=False):
     if not os.path.exists(filename):
@@ -16,8 +16,16 @@ def download(url, filename, fake_headers=False):
         headers = {}
         if fake_headers:
             headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36'
-        r = requests.get(url, allow_redirects=True, headers=headers)
-        open(filename, "wb").write(r.content)
+        r = requests.get(url, allow_redirects=True, headers=headers, stream=True)
+
+        total_size = int(r.headers.get("Content-Length", 0))
+
+        bar = tqdm(total=total_size, unit='iB', unit_scale=True)
+
+        with open(filename, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=1024):
+                f.write(chunk)
+                bar.update(len(chunk))
 
 def downloadGithubRelease(repo, filename, *, filter=lambda n: "win" in n, allow_prerelease=False):
     if not os.path.exists(filename):
