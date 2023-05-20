@@ -75,13 +75,23 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--test', action='append', help="Filter for tests with keywords")
     parser.add_argument('--emulator', action='append', help="Filter to test only emulators with keywords")
+    parser.add_argument('--model', action='append', help="Filter to tests with model")
     parser.add_argument('--get-runtime', action='store_true')
     parser.add_argument('--get-startuptime', action='store_true')
     parser.add_argument('--dump-emulators-json', action='store_true')
     parser.add_argument('--dump-tests-json', action='store_true')
     args = parser.parse_args()
 
-    tests = [test for test in tests if checkFilter(test, args.test)]
+    for model in args.model or []:
+        if model not in ["DMG", "CGB", "SGB"]:
+            print("Model %s is invalid. Only DMG, CGB and SGB are valid models")
+            exit(1)
+
+    tests = [
+        test
+        for test in tests
+        if checkFilter(test, args.test) and checkFilter(test.model, args.model)
+    ]
     emulators = [emulator for emulator in emulators if checkFilter(emulator, args.emulator)]
 
     print("%d emulators" % (len(emulators)))
