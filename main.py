@@ -160,6 +160,8 @@ if __name__ == "__main__":
                     result = emulator.run(test)
                     if result is not None:
                         results[emulator][test] = result
+                except KeyboardInterrupt:
+                    exit(0)
                 except:
                     import traceback
                     print("Emulator %s failed to run properly" % (emulator))
