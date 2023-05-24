@@ -23,7 +23,6 @@ class Binjgb(Emulator):
 
     def getScreenshot(self):
         screenshot = getScreenshot(self.title_check)
-        print(screenshot)
         if screenshot is None:
             return None
         return screenshot.resize((160, 144), Image.NEAREST)
