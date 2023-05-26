@@ -41,6 +41,8 @@ from emulators.jitboy import JitBoy
 
 
 emulators = [
+    JitBoy(),
+    GameRoy(),
     BDM(),
     MGBA(), # Black screen on github actions
     KiGB(), # Crashes on github actions
@@ -57,9 +59,6 @@ emulators = [
     PyBoy(),
     Ares(),
     Emmy(),
-
-    GameRoy(),
-    JitBoy(),
 ]
 tests = testroms.acid.all + testroms.blarg.all + testroms.daid.all + testroms.ax6.all + testroms.mooneye.all + testroms.samesuite.all + testroms.hacktix.all + testroms.cpp.all
 
