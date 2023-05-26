@@ -24,15 +24,25 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
+
+      # Need by Browser-based emulators.
+      - uses: nanasess/setup-chromedriver@v2
+
+      # Need by Linux-based emulators.
+      - uses: Vampire/setup-wsl@v2
+
       - name: Add python required modules
         run: |
           python -m pip install -r requirements.txt
+
       - name: Check emulator startups
         run: |
           python main.py --get-startuptime --emulator !mGBA --emulator !KiGB --emulator !Goomba --emulator '!No$gmb' --emulator !binjgb
+
       - name: Archive startup time result
         uses: actions/upload-artifact@v2
         with:
