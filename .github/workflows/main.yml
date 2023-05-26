@@ -34,6 +34,11 @@ jobs:
 
       # Need by Linux-based emulators.
       - uses: Vampire/setup-wsl@v2
+        with:
+          distribution: Ubuntu-20.04
+          additional-packages:
+            build-essential
+            libsdl2-dev
 
       - name: Add python required modules
         run: |
