@@ -41,6 +41,7 @@ from emulators.jitboy import JitBoy
 
 
 emulators = [
+    Emulicious(),
     JitBoy(),
     GameRoy(),
     BDM(),
@@ -52,7 +53,6 @@ emulators = [
     VBAM(),
     NoCash(),
     GambatteSpeedrun(),
-    Emulicious(),
     # Higan(), # Crashes all over the place.
     Goomba(),
     Binjgb(),
