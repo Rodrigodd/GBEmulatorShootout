@@ -1,3 +1,4 @@
+import shutil
 import pyautogui
 import requests
 import os
@@ -21,11 +22,17 @@ def download(url, filename, fake_headers=False):
         total_size = int(r.headers.get("Content-Length", 0))
 
         bar = tqdm(total=total_size, unit='iB', unit_scale=True)
-
-        with open(filename, 'wb') as f:
-            for chunk in r.iter_content(chunk_size=1024):
-                f.write(chunk)
-                bar.update(len(chunk))
+        
+        tempname = filename + '.downloading'
+        try:
+            with open(tempname, 'wb') as f:
+                for chunk in r.iter_content(chunk_size=1024):
+                    f.write(chunk)
+                    bar.update(len(chunk))
+            os.rename(tempname, filename)
+        finally:
+            if os.path.exists(tempname):
+                os.remove(tempname)
 
 def downloadGithubRelease(repo, filename, *, filter=lambda n: "win" in n, allow_prerelease=False):
     if not os.path.exists(filename):
