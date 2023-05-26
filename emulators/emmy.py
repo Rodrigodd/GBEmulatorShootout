@@ -9,12 +9,8 @@ class Emmy(Emulator):
         super().__init__("Emmy", "https://emmy-gbc.vercel.app/", startup_time=0.5)
 
     def setup(self):
-        # download("http://problemkaputt.de/no$gmb.zip", "downloads/no$gmb.zip", fake_headers=True)
-        # extract("downloads/no$gmb.zip", "emu/no$gmb")
-        # https://chromedriver.storage.googleapis.com/109.0.5414.74/chromedriver_win32.zip
-        download("https://chromedriver.storage.googleapis.com/109.0.5414.74/chromedriver_win32.zip", "downloads/chromedriver_win32.zip")
-        extract("downloads/chromedriver_win32.zip", "emu/chromedriver_win32")
-        self.driver = webdriver.Chrome("emu/chromedriver_win32/chromedriver.exe")
+        # requires: chormedriver (https://sites.google.com/chromium.org/driver/)
+        self.driver = webdriver.Chrome()
         self.driver.get("https://emmy-gbc.vercel.app/")
         self.driver.find_element(value="emu-speed").click()
         self.driver.find_element(value="drawer-section-settings").click()
