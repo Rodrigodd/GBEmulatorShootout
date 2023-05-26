@@ -37,6 +37,7 @@ from util import *
 from test import *
 
 from emulators.gameroy import GameRoy
+from emulators.jitboy import JitBoy
 
 
 emulators = [
@@ -56,7 +57,9 @@ emulators = [
     PyBoy(),
     Ares(),
     Emmy(),
+
     GameRoy(),
+    JitBoy(),
 ]
 tests = testroms.acid.all + testroms.blarg.all + testroms.daid.all + testroms.ax6.all + testroms.mooneye.all + testroms.samesuite.all + testroms.hacktix.all + testroms.cpp.all
 
