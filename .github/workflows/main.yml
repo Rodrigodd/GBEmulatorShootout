@@ -39,6 +39,7 @@ jobs:
           additional-packages:
             build-essential
             libsdl2-dev
+            xvfb
 
       - name: Add python required modules
         run: |
