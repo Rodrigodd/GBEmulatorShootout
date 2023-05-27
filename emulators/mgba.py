@@ -20,7 +20,7 @@ class MGBA(Emulator):
         shutil.copyfile(os.path.join(os.path.dirname(__file__), "mgba.qt.ini"), "%s/qt.ini" % (self.path))
         shutil.copyfile(os.path.join(os.path.dirname(__file__), "mgba.config.ini"), "%s/config.ini" % (self.path))
 
-        setupMesa(r"emu\mgba")
+        setupMesa(self.path)
     
     def startProcess(self, rom, *, model, required_features):
         #return subprocess.Popen(["%s/mGBA.exe" % (self.path), os.path.abspath(rom)], cwd=self.path)
