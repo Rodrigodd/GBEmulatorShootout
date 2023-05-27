@@ -2,6 +2,7 @@ from util import *
 from emulator import Emulator
 from test import *
 import shutil
+import os
 
 
 class GameRoy(Emulator):
@@ -14,6 +15,8 @@ class GameRoy(Emulator):
         downloadGithubRelease("Rodrigodd/gameroy", "downloads/gameroy.zip")
         extract("downloads/gameroy.zip", "emu/gameroy")
         setDPIScaling("emu/gameroy/gameroy.exe")
+        os.system('mklink emu/gameroy/opengl32.dll "downloads/mesa/x64/opengl32.dll"')
+        os.system('mklink emu/gameroy/libglapi.dll "downloads/mesa/x64/libglapi.dll"')
     
     def startProcess(self, rom, *, model, required_features):
         if model != DMG:
