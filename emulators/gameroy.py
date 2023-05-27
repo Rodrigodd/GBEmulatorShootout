@@ -15,8 +15,11 @@ class GameRoy(Emulator):
         downloadGithubRelease("Rodrigodd/gameroy", "downloads/gameroy.zip")
         extract("downloads/gameroy.zip", "emu/gameroy")
         setDPIScaling("emu/gameroy/gameroy.exe")
-        os.system('mklink emu/gameroy/opengl32.dll "downloads/mesa/x64/opengl32.dll"')
-        os.system('mklink emu/gameroy/libglapi.dll "downloads/mesa/x64/libglapi.dll"')
+
+        download("https://github.com/pal1000/mesa-dist-win/releases/download/20.3.2/mesa3d-20.3.2-release-msvc.7z", "downloads/mesa.7z")
+        extract("downloads/mesa.7z", "downloads/mesa")
+        os.system(r'mklink emu\gameroy\opengl32.dll "..\..\downloads\mesa\x64\opengl32.dll"')
+        os.system(r'mklink emu\gameroy\libglapi.dll "..\..\downloads\mesa\x64\libglapi.dll"')
     
     def startProcess(self, rom, *, model, required_features):
         if model != DMG:
