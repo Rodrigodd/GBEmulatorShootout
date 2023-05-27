@@ -9,6 +9,7 @@ import PIL.ImageChops
 import sys
 import argparse
 import json
+from emulator import Emulator
 
 import testroms.blarg
 import testroms.mooneye
@@ -40,7 +41,7 @@ from emulators.gameroy import GameRoy
 from emulators.jitboy import JitBoy
 
 
-emulators = [
+emulators: list[Emulator] = [
     Emulicious(),
     JitBoy(),
     GameRoy(),
