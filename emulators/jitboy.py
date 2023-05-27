@@ -47,10 +47,12 @@ class JitBoy(Emulator):
 
         return p
 
+    def endProcess(self, p: subprocess.Popen):
+        wsl('DISPLAY=:43 xdotool search "jitboy" windowclose')
+        p.wait()
+
     def isWindowOpen(self):
-
         time.sleep(1.0 - (time.monotonic() - self.start_time))
-
         return True
 
     def getScreenshot(self):

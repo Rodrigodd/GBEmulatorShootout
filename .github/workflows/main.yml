@@ -42,6 +42,7 @@ jobs:
             xvfb
             x11-apps
             imagemagick
+            xdotool
 
       - name: Add python required modules
         run: |
