@@ -49,7 +49,7 @@ jobs:
 
       - name: Check emulator startups
         run: |
-          python main.py --get-startuptime --emulator !mGBA --emulator !KiGB --emulator !Goomba --emulator '!No$gmb' --emulator !binjgb
+          python main.py --get-startuptime --emulator JitBoy --emulator gameroy
 
       - name: Archive startup time result
         uses: actions/upload-artifact@v2
