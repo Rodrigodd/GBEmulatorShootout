@@ -126,12 +126,13 @@ class Emulator:
         print("Window found")
         while True:
             if not self.isProcessAlive(p) or time.monotonic() - post_window_time > 60.0:
+                screenshot = fullscreenScreenshot()
                 if self.isProcessAlive(p):
                     print("Process timeout: %s" % (self.processOutput(p)))
                     self.endProcess(p)
                 else:
                     print("Process gone: %s" % (self.processOutput(p)))
-                return None, fullscreenScreenshot()
+                return None, screenshot
             screenshot = self.getScreenshot()
             if screenshot is None:
                 continue
