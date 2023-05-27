@@ -56,17 +56,21 @@ class JitBoy(Emulator):
         return True
 
     def getScreenshot(self):
-
         # Dump the content of the X11 Server root window to a file, and convert it to PNG.
         wsl(f'xwd -root -display :43 | convert xwd:- png:- > tmp.png').wait()
 
-        screenshot = PIL.Image.open("tmp.png", formats=["PNG"])
+        # The tmp.png could be corrupted if the command above fails for some reason
+        try:
+            screenshot = PIL.Image.open("tmp.png", formats=["PNG"])
 
-        x = (screenshot.size[0] - 160*3) // 2
-        y = (screenshot.size[1] - 144*3) // 2
-        screenshot = screenshot.crop((x, y, x + 160*3, y + 144*3))
-        screenshot = screenshot.resize((160, 144))
+            x = (screenshot.size[0] - 160*3) // 2
+            y = (screenshot.size[1] - 144*3) // 2
+            screenshot = screenshot.crop((x, y, x + 160*3, y + 144*3))
+            screenshot = screenshot.resize((160, 144))
 
-        screenshot.save('tmp2.png')
+            screenshot.save('tmp2.png')
+        except Exception as e:
+            print(e)
+            return None
 
         return screenshot
