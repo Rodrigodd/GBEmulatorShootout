@@ -10,6 +10,12 @@ import io
 import base64
 from tqdm import tqdm
 
+def setupMesa(path):
+    download("https://github.com/pal1000/mesa-dist-win/releases/download/20.3.2/mesa3d-20.3.2-release-msvc.7z", "downloads/mesa.7z")
+    extract("downloads/mesa.7z", "downloads/mesa")
+    os.system(fr'mklink {path}\opengl32.dll "..\..\downloads\mesa\x64\opengl32.dll"')
+    os.system(fr'mklink {path}\libglapi.dll "..\..\downloads\mesa\x64\libglapi.dll"')
+
 def download(url, filename, fake_headers=False):
     if not os.path.exists(filename):
         os.makedirs(os.path.dirname(filename), exist_ok=True)
