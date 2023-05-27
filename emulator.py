@@ -141,7 +141,8 @@ class Emulator:
             colors = screenshot.getcolors()
             if colors is None or len(colors) != 2:
                 continue
-            if not compareImage(screenshot, reference):
+            # the JitBoy emulator misrender 4 scanlines of the screen, so we forgive that ammount
+            if not compareImage(screenshot, reference, forgive = 640):
                 continue
             break
         startup_time = time.monotonic() - post_window_time
