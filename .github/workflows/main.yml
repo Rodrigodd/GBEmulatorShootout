@@ -40,6 +40,8 @@ jobs:
             build-essential
             libsdl2-dev
             xvfb
+            x11-apps
+            imagemagick
 
       - name: Add python required modules
         run: |
