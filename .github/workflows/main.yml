@@ -50,7 +50,7 @@ jobs:
 
       - name: Check emulator startups
         run: |
-          python main.py --get-startuptime --emulator gameroy
+          python main.py --get-startuptime --emulator !JitBoy
 
       - name: Archive startup time result
         uses: actions/upload-artifact@v2
@@ -60,14 +60,14 @@ jobs:
 
       # - name: Run tests
       #   run: |
-      #     python main.py --emulator !mGBA --emulator !KiGB --emulator !Goomba --emulator '!No$gmb' --emulator !binjgb
+      #     python main.py --emulator !mGBA --emulator !KiGB --emulator !Goomba --emulator '!No$gmb' --emulator !binjgb --emulator !JitBoy
       #     python main.py --dump-tests-json --dump-emulators-json
 
       - name: Deploy pages
         run: |
           git config --global user.name "github actions"
           git config --global user.email "github@actions"
-          git clone --single-branch --branch gh-pages https://github.com/daid/GBEmulatorShootout.git pages
+          git clone --single-branch --branch gh-pages https://github.com/Rodrigodd/GBEmulatorShootout.git pages
           cp *.json pages/
           cd pages
           python build.py
