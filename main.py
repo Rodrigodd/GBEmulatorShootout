@@ -138,13 +138,13 @@ if __name__ == "__main__":
             gbc_start_time, gbc_screenshot = emulator.measureStartupTime(model=CGB)
             sgb_start_time, sgb_screenshot = emulator.measureStartupTime(model=SGB)
             if dmg_screenshot is not None:
-                print("Startup time: %s = %g (dmg)" % (emulator, dmg_start_time))
+                print("Startup time: %s = %g (dmg)" % (emulator, dmg_start_time or 0.0))
                 f.write("%s (dmg)<br>\n<img src='data:image/png;base64,%s'><br>\n" % (emulator, imageToBase64(dmg_screenshot)))
             if gbc_screenshot is not None:
-                print("Startup time: %s = %g (gbc)" % (emulator, gbc_start_time))
+                print("Startup time: %s = %g (gbc)" % (emulator, gbc_start_time or 0.0))
                 f.write("%s (gbc)<br>\n<img src='data:image/png;base64,%s'><br>\n" % (emulator, imageToBase64(gbc_screenshot)))
             if sgb_screenshot is not None:
-                print("Startup time: %s = %g (sgb)" % (emulator, sgb_start_time))
+                print("Startup time: %s = %g (sgb)" % (emulator, sgb_start_time or 0.0))
                 f.write("%s (sgb)<br>\n<img src='data:image/png;base64,%s'><br>\n" % (emulator, imageToBase64(sgb_screenshot)))
             emulator.undoSetup()
         f.write("</body></html>")
