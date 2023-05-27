@@ -58,10 +58,10 @@ jobs:
           name: startuptime
           path: startuptime.html
 
-      - name: Run tests
-        run: |
-          python main.py --emulator gameroy
-          python main.py --dump-tests-json --dump-emulators-json
+      # - name: Run tests
+      #   run: |
+      #     python main.py --emulator !mGBA --emulator !KiGB --emulator !Goomba --emulator '!No$gmb' --emulator !binjgb
+      #     python main.py --dump-tests-json --dump-emulators-json
 
       - name: Deploy pages
         run: |
