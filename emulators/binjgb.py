@@ -16,6 +16,8 @@ class Binjgb(Emulator):
         self.__path = [f for f in os.listdir("emu/binjgb") if not f.endswith(".tar")][0]
         setDPIScaling("emu/binjgb/%s/bin/binjgb.exe" % (self.__path))
 
+        setupMesa(r"emu\binjgb\%s\bin" % self.__path)
+
     def startProcess(self, rom, *, model, required_features):
         if model == DMG:
             return subprocess.Popen(["emu/binjgb/%s/bin/binjgb.exe" % (self.__path), "--force-dmg", os.path.abspath(rom)], cwd="emu/binjgb")
