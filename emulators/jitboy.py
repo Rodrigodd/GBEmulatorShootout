@@ -7,8 +7,8 @@ import shutil
 
 def wsl(command, *, cwd=None):
     return subprocess.Popen([
-        "wsl.exe", "--",
-        "bash", "-c",
+        "wsl.exe", "-d", "Debian", "--",
+        "bash", "-xc",
         command,
     ], cwd=cwd)
 
@@ -37,11 +37,7 @@ class JitBoy(Emulator):
         rom = rom.replace("\\", "/")
 
         # Renders the emulator in Xvfb (a X11 server that just renders to a frame buffer)
-        p = subprocess.Popen([
-            "wsl.exe", "--",
-            "bash", "-c",
-            f'Xvfb :43 -screen 0 480x432x24 & trap \'jobs -p | xargs kill\' EXIT TERM INT; DISPLAY=:43 ./jitboy "../../{rom}"',
-        ], cwd="emu/jitboy")
+        p = wsl(f'Xvfb :43 -screen 0 480x432x24 & trap \'jobs -p | xargs kill\' EXIT TERM INT; DISPLAY=:43 ./jitboy "../../{rom}"', cwd="emu/jitboy")
 
         self.start_time = time.monotonic()
 
