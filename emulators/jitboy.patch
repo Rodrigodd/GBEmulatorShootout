@@ -1,13 +1,13 @@
 diff --git a/src/audio.c b/src/audio.c
-index dac7a8f..324fecd 100644
+index dac7a8f..de5b59f 100644
 --- a/src/audio.c
 +++ b/src/audio.c
-@@ -494,7 +494,7 @@ void audio_init(gb_audio *audio, gb_memory *mem)
+@@ -478,6 +478,8 @@ void audio_callback(void *userdata, uint8_t *restrict stream, int len)
  
-     if ((dev = SDL_OpenAudioDevice(NULL, 0, &want, &have, 0)) == 0) {
-         printf("SDL could not open audio device: %s\n", SDL_GetError());
--        exit(EXIT_FAILURE);
-+        return;
-     }
+ void audio_init(gb_audio *audio, gb_memory *mem)
+ {
++    return;
++
+     SDL_InitSubSystem(SDL_INIT_AUDIO);
  
-     audio->dev = dev;
+     SDL_AudioDeviceID dev;

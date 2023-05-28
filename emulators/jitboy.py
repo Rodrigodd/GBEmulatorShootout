@@ -23,9 +23,9 @@ class JitBoy(Emulator):
 
         if not os.path.exists('downloads/jitboy'):
             os.system("git clone --depth=1 http://github.com/sysprog21/jitboy.git downloads/jitboy")
-            os.system("cd downloads\\jitboy && git apply ..\\..\\emulators\\jitboy.patch")
+            patch_file = os.path.join(os.path.dirname(__file__), "jitboy.patch")
+            os.system(f"cd downloads\\jitboy && git apply {patch_file}")
 
-        # requires: libsdl2-dev make
         wsl('export GIT_SSL_NO_VERIFY=true; make clean; make build/jitboy', cwd="downloads/jitboy").wait()
         os.makedirs("emu/jitboy", exist_ok=True)
         shutil.copyfile("downloads/jitboy/build/jitboy", "emu/jitboy/jitboy")
