@@ -48,7 +48,6 @@ class JitBoy(Emulator):
         p.wait()
 
     def isWindowOpen(self):
-        time.sleep(1.0 - (time.monotonic() - self.start_time))
         return True
 
     def getScreenshot(self):
