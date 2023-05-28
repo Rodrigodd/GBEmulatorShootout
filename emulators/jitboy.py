@@ -40,6 +40,7 @@ class JitBoy(Emulator):
         p = wsl(f'Xvfb :43 -screen 0 480x432x24 & trap \'jobs -p | xargs kill\' EXIT TERM INT; DISPLAY=:43 ./jitboy "../../{rom}"', cwd="emu/jitboy")
 
         self.start_time = time.monotonic()
+        print(f'start time is {self.start_time}')
 
         return p
 

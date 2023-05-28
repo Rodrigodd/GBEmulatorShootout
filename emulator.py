@@ -107,6 +107,7 @@ class Emulator:
         return last_change - start
 
     def measureStartupTime(self, *, model):
+        print(f'Measuring startup time of {self}')
         p = self.startProcess("startup_time_test.gb", model=model, required_features=set())
         if p is None:
             return None, None
