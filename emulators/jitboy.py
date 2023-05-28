@@ -26,7 +26,7 @@ class JitBoy(Emulator):
             os.system("cd downloads\\jitboy && git apply ..\\..\\emulators\\jitboy.patch")
 
         # requires: libsdl2-dev make
-        wsl('make clean && make build/jitboy', cwd="downloads/jitboy").wait()
+        wsl('export GIT_SSL_NO_VERIFY=true; make clean; make build/jitboy', cwd="downloads/jitboy").wait()
         os.makedirs("emu/jitboy", exist_ok=True)
         shutil.copyfile("downloads/jitboy/build/jitboy", "emu/jitboy/jitboy")
 
