@@ -43,6 +43,7 @@ jobs:
             x11-apps
             imagemagick
             xdotool
+            git
 
       # Install virtual audio device, avoid that some emulators crash.
       # From https://github.com/actions/runner-images/issues/2528#issuecomment-766883233
