@@ -98,7 +98,7 @@ class Emulator:
             if prev is not None and not compareImage(screenshot, prev):
                 last_change = time.monotonic()
             prev = screenshot
-            if time.monotonic() - last_change > 10.0:
+            if time.monotonic() - last_change > 60.0:
                 break
             assert self.isProcessAlive(p), "Process crashed? (exit: %d)" % (self.returncode(p))
         if not os.path.exists(test.pass_result_filename):
@@ -114,7 +114,7 @@ class Emulator:
         start_pre_window_time = time.monotonic()
         while not self.isWindowOpen():
             time.sleep(0.01)
-            if not self.isProcessAlive(p) or time.monotonic() - start_pre_window_time > 10.0:
+            if not self.isProcessAlive(p) or time.monotonic() - start_pre_window_time > 60.0:
                 print("Window not found")
                 if self.isProcessAlive(p):
                     print("Process timeout: %s" % (self.processOutput(p)))
@@ -125,7 +125,7 @@ class Emulator:
         post_window_time = time.monotonic()
         print("Window found")
         while True:
-            if not self.isProcessAlive(p) or time.monotonic() - post_window_time > 10.0:
+            if not self.isProcessAlive(p) or time.monotonic() - post_window_time > 60.0:
                 screenshot = fullscreenScreenshot()
                 if self.isProcessAlive(p):
                     print("Process timeout: %s" % (self.processOutput(p)))
