@@ -1,3 +1,4 @@
+from subprocess import TimeoutExpired
 from util import *
 from emulator import Emulator
 from test import *
@@ -11,6 +12,23 @@ def wsl(command, *, cwd=None):
         "bash", "-xc",
         command,
     ], cwd=cwd)
+
+def wsl_wait(command, *, cwd=None):
+    count = 0
+    while True:
+        p = None
+        try:
+            p = wsl(command, cwd=cwd)
+            p.wait()
+        except TimeoutExpired as e:
+            if p:
+                p.terminate()
+            count += 1
+            print(f'Time out expired {count}')
+            if count == 3:
+                raise e
+            continue
+        break
 
 class JitBoy(Emulator):
     def __init__(self):
@@ -26,7 +44,9 @@ class JitBoy(Emulator):
             patch_file = os.path.join(os.path.dirname(__file__), "jitboy.patch")
             os.system(f"cd downloads\\jitboy && git apply {patch_file}")
 
-        wsl('export GIT_SSL_NO_VERIFY=true; make clean; make build/jitboy', cwd="downloads/jitboy").wait()
+        wsl_wait('export GIT_SSL_NO_VERIFY=true; make clean; make build/jitboy', cwd="downloads/jitboy")
+            
+
         os.makedirs("emu/jitboy", exist_ok=True)
         shutil.copyfile("downloads/jitboy/build/jitboy", "emu/jitboy/jitboy")
 
@@ -45,15 +65,21 @@ class JitBoy(Emulator):
         return p
 
     def endProcess(self, p: subprocess.Popen):
-        wsl('DISPLAY=:43 xdotool search "jitboy" windowclose')
-        p.wait()
+        wsl_wait('DISPLAY=:43 xdotool search "jitboy" windowclose')
+        try:
+            p.wait(30)
+        except TimeoutExpired:
+            p.terminate()
 
     def isWindowOpen(self):
         return True
 
     def getScreenshot(self):
         # Dump the content of the X11 Server root window to a file, and convert it to PNG.
-        wsl(f'xwd -root -display :43 | convert xwd:- png:- > tmp.png').wait()
+        try:
+            wsl_wait(f'xwd -root -display :43 | convert xwd:- png:- > tmp.png')
+        except TimeoutExpired:
+            pass
 
         # The tmp.png could be corrupted if the command above fails for some reason
         try:
