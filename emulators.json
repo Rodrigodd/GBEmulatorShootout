@@ -1,4 +1,16 @@
 {
+  "Emulicious": {
+    "file": "emulicious.json",
+    "url": "https://emulicious.net/"
+  },
+  "JitBoy": {
+    "file": "jitboy.json",
+    "url": "https://github.com/sysprog21/jitboy"
+  },
+  "gameroy": {
+    "file": "gameroy.json",
+    "url": "https://github.com/Rodrigodd/gameroy"
+  },
   "Beaten Dying Moon": {
     "file": "beaten_dying_moon.json",
     "url": "https://mattcurrie.com/bdm-demo/"
@@ -21,7 +33,7 @@
   },
   "VisualBoyAdvance": {
     "file": "visualboyadvance.json",
-    "url": "https://sourceforge.net/projects/"
+    "url": "https://sourceforge.net/projects/vba"
   },
   "VisualBoyAdvance-M": {
     "file": "visualboyadvance-m.json",
@@ -34,10 +46,6 @@
   "GambatteSpeedrun": {
     "file": "gambattespeedrun.json",
     "url": "https://github.com/pokemon-speedrunning/gambatte-speedrun"
-  },
-  "Emulicious": {
-    "file": "emulicious.json",
-    "url": "https://emulicious.net/"
   },
   "Goomba": {
     "file": "goomba.json",
@@ -54,5 +62,9 @@
   "ares": {
     "file": "ares.json",
     "url": "https://ares-emu.net/"
+  },
+  "Emmy": {
+    "file": "emmy.json",
+    "url": "https://emmy-gbc.vercel.app/"
   }
 }
