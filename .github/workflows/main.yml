@@ -35,7 +35,7 @@ jobs:
       # Need by Linux-based emulators.
       - uses: Vampire/setup-wsl@v2
         with:
-          distribution: Ubuntu-20.04
+          distribution: Debian
           additional-packages:
             build-essential
             libsdl2-dev
