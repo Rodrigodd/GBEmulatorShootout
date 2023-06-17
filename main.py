@@ -20,6 +20,7 @@ import testroms.ax6
 import testroms.daid
 import testroms.hacktix
 import testroms.cpp
+import testroms.mealybug
 from emulators.kigb import KiGB
 from emulators.bgb import BGB
 from emulators.vba import VBA, VBAM
@@ -62,7 +63,7 @@ emulators: list[Emulator] = [
     Ares(),
     Emmy(),
 ]
-tests = testroms.acid.all + testroms.blarg.all + testroms.daid.all + testroms.ax6.all + testroms.mooneye.all + testroms.samesuite.all + testroms.hacktix.all + testroms.cpp.all
+tests = testroms.acid.all + testroms.blarg.all + testroms.daid.all + testroms.ax6.all + testroms.mooneye.all + testroms.samesuite.all + testroms.hacktix.all + testroms.cpp.all + testroms.mealybug.all
 
 def checkFilter(input, filter_data):
     if filter_data is None:
