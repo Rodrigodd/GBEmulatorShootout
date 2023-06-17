@@ -175,7 +175,7 @@ if __name__ == "__main__":
         try:
             emulator.setup()
         except Exception:
-            print(f'Exception while running {emulator}')
+            print(f'Exception while setting up {emulator}')
             traceback.print_exc()
             continue
 
