@@ -67,6 +67,7 @@ class Emulator:
         self.postWindowCreation()
         start_time = time.monotonic()
         result = None
+        screenshot = None
         while time.monotonic() - start_time < (test.runtime / self.speed) + self.startup_time + 5.0:
             time.sleep(0.1)
             screenshot = self.getScreenshot()
