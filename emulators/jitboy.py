@@ -41,8 +41,6 @@ class JitBoy(Emulator):
 
         if not os.path.exists('downloads/jitboy'):
             os.system("git clone --depth=1 http://github.com/sysprog21/jitboy.git downloads/jitboy")
-            patch_file = os.path.join(os.path.dirname(__file__), "jitboy.patch")
-            os.system(f"cd downloads\\jitboy && git apply {patch_file}")
 
         wsl_wait('export GIT_SSL_NO_VERIFY=true; make clean; make build/jitboy', cwd="downloads/jitboy")
             
@@ -57,7 +55,7 @@ class JitBoy(Emulator):
         rom = rom.replace("\\", "/")
 
         # Renders the emulator in Xvfb (a X11 server that just renders to a frame buffer)
-        p = wsl(f'Xvfb :43 -screen 0 480x432x24 & trap \'jobs -p | xargs kill\' EXIT TERM INT; DISPLAY=:43 ./jitboy "../../{rom}"', cwd="emu/jitboy")
+        p = wsl(f'Xvfb :43 -screen 0 160x144x24 & trap \'jobs -p | xargs kill\' EXIT TERM INT; DISPLAY=:43 ./jitboy -s1 -t --no-sound "../../{rom}"', cwd="emu/jitboy")
 
         self.start_time = time.monotonic()
         print(f'start time is {self.start_time}')
@@ -85,10 +83,10 @@ class JitBoy(Emulator):
         try:
             screenshot = PIL.Image.open("tmp.png", formats=["PNG"])
 
-            x = (screenshot.size[0] - 160*3) // 2
-            y = (screenshot.size[1] - 144*3) // 2
-            screenshot = screenshot.crop((x, y, x + 160*3, y + 144*3))
-            screenshot = screenshot.resize((160, 144))
+            x = (screenshot.size[0] - 160) // 2
+            y = (screenshot.size[1] - 144) // 2
+            screenshot = screenshot.crop((x, y, x + 160, y + 144))
+            # screenshot = screenshot.resize((160, 144))
 
             screenshot.save('tmp2.png')
         except Exception as e:
