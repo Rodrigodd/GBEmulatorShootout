@@ -67,7 +67,7 @@ jobs:
 
       - name: Check emulator startups
         run: |
-          python main.py --get-startuptime --emulator JitBoy
+          python main.py --get-startuptime --emulator !JitBoy
 
       - name: Archive startup time result
         uses: actions/upload-artifact@v2
@@ -77,7 +77,7 @@ jobs:
 
       - name: Run tests
         run: |
-          python main.py --emulator JitBoy
+          python main.py --emulator !JitBoy
           python main.py --dump-tests-json --dump-emulators-json
 
       - name: Deploy pages
