@@ -50,6 +50,33 @@ class VBAM(Emulator):
         download("https://gbdev.gg8.se/files/roms/bootroms/cgb_boot.bin", "emu/vba-m/cgb_boot.bin")
         download("https://gbdev.gg8.se/files/roms/bootroms/sgb_boot.bin", "emu/vba-m/sgb_boot.bin")
 
+        # disables "check for updates" modal window
+        subprocess.run([
+            "REG",
+            "ADD",
+            r"HKCU\SOFTWARE\visualboyadvance-m\VisualBoyAdvance-M\WinSparkle",
+            "/V",
+            "CheckForUpdates",
+            "/T",
+            "REG_SZ",
+            "/D",
+            "0",
+            "/F",
+        ])
+        subprocess.run([
+            "REG",
+            "ADD",
+            r"HKCU\SOFTWARE\visualboyadvance-m\VisualBoyAdvance-M\WinSparkle",
+            "/V",
+            "DidRunOnce",
+            "/T",
+            "REG_SZ",
+            "/D",
+            "1",
+            "/F",
+        ])
+
+
     def startProcess(self, rom, *, model, required_features):
         if model == DMG:
             shutil.copyfile(os.path.join(os.path.dirname(__file__), "vbam.dmg.ini"), "emu/vba-m/vbam.ini")
