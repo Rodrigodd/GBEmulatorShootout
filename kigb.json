@@ -1,11 +1,11 @@
 {
   "emulator": "KiGB",
-  "date": 1687152630.5273607,
+  "date": 1687205007.0088017,
   "tests": {
     "daid/stop_instr.gb (GBC)": {
       "result": "PASS",
-      "startuptime": 0.20300000000042928,
-      "runtime": 0.14099999999962165,
+      "startuptime": 0.25,
+      "runtime": 0.15599999999994907,
       "screenshot": "iVBORw0KGgoAAAANSUhEUgAAAKAAAACQCAIAAAAA1/fXAAAAWklEQVR4nO3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+Bg6fAAHcZgz3AAAAAElFTkSuQmCC"
     }
   }
