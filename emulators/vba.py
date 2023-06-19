@@ -93,5 +93,5 @@ class VBAM(Emulator):
         if screenshot is None:
             return None
         x = (screenshot.size[0] - 160) // 2
-        y = (screenshot.size[1] - 144) // 2 - 1
+        y = (screenshot.size[1] - 144) // 2
         return screenshot.crop((x, y, x + 160, y + 144))
