@@ -1,11 +1,11 @@
 {
   "emulator": "VisualBoyAdvance",
-  "date": 1687205007.0088017,
+  "date": 1687391771.3194816,
   "tests": {
     "daid/stop_instr.gb (GBC)": {
       "result": "PASS",
-      "startuptime": 0.04700000000048021,
-      "runtime": 0.14099999999962165,
+      "startuptime": 0.04699999999957072,
+      "runtime": 0.15599999999994907,
       "screenshot": "iVBORw0KGgoAAAANSUhEUgAAAKAAAACQCAIAAAAA1/fXAAAAWklEQVR4nO3BMQEAAADCoPVPbQwfoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+Bg6fAAHcZgz3AAAAAElFTkSuQmCC"
     }
   }
