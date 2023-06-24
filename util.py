@@ -125,15 +125,13 @@ def fullscreenScreenshot():
 def setDPIScaling(executable):
     subprocess.run(["REG", "ADD", "HKCU\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers", "/V", os.path.abspath(executable), "/T", "REG_SZ", "/D", "~ HIGHDPIAWARE", "/F"])
 
-def compareImage(a, b, forgive = 0):
+def compareImage(a, b):
     a = a.convert(mode="L", dither=PIL.Image.NONE)
     b = b.convert(mode="L", dither=PIL.Image.NONE)
     result = PIL.ImageChops.difference(a, b)
     for count, color in result.getcolors():
         if color > 50:
-            forgive -= count
-            if forgive < 0:
-                return False
+            return False
     return True
 
 def imageToBase64(img):

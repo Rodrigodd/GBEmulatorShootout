@@ -20,22 +20,6 @@ class VBA(Emulator):
     def startProcess(self, rom, *, model, required_features):
         return subprocess.Popen(["emu/vba/VisualBoyAdvance-SDL.exe", os.path.abspath(rom)], cwd="emu/vba")
 
-    def getScreenshot(self):
-        screenshot = getScreenshot(self.title_check)
-        if screenshot == None:
-            return None
-        if screenshot.width > 160:
-            screenshot = screenshot.resize((160, 144), PIL.Image.NEAREST)
-            screenshot = PIL.ImageChops.offset(screenshot, 0, -1)
-
-            # HACK: The emulator is cropping out the last row of the LCD. We
-            # are filling the last row by assuming that the last and last - 1
-            # rows are equal. Didn't break any passing test, at least.
-            pixels = screenshot.load()
-            for x in range(160):
-                pixels[x, 143] = pixels[x, 142]
-
-        return screenshot
 
 class VBAM(Emulator):
     def __init__(self):

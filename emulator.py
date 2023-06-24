@@ -99,7 +99,7 @@ class Emulator:
             if prev is not None and not compareImage(screenshot, prev):
                 last_change = time.monotonic()
             prev = screenshot
-            if time.monotonic() - last_change > 60.0:
+            if time.monotonic() - last_change > 10.0:
                 break
             assert self.isProcessAlive(p), "Process crashed? (exit: %d)" % (self.returncode(p))
         if not os.path.exists(test.pass_result_filename):
@@ -144,8 +144,7 @@ class Emulator:
             colors = screenshot.getcolors()
             if colors is None or len(colors) != 2:
                 continue
-            # the JitBoy emulator misrender 4 scanlines of the screen, so we forgive that ammount
-            if not compareImage(screenshot, reference, forgive = 640):
+            if not compareImage(screenshot, reference):
                 continue
             break
         startup_time = time.monotonic() - post_window_time
