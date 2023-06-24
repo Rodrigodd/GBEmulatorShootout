@@ -1,16 +1,4 @@
 {
-  "Emulicious": {
-    "file": "emulicious.json",
-    "url": "https://emulicious.net/"
-  },
-  "JitBoy": {
-    "file": "jitboy.json",
-    "url": "https://github.com/sysprog21/jitboy"
-  },
-  "gameroy": {
-    "file": "gameroy.json",
-    "url": "https://github.com/Rodrigodd/gameroy"
-  },
   "Beaten Dying Moon": {
     "file": "beaten_dying_moon.json",
     "url": "https://mattcurrie.com/bdm-demo/"
@@ -47,6 +35,10 @@
     "file": "gambattespeedrun.json",
     "url": "https://github.com/pokemon-speedrunning/gambatte-speedrun"
   },
+  "Emulicious": {
+    "file": "emulicious.json",
+    "url": "https://emulicious.net/"
+  },
   "Goomba": {
     "file": "goomba.json",
     "url": "https://www.dwedit.org/gba/goombacolor.php"
@@ -66,5 +58,9 @@
   "Emmy": {
     "file": "emmy.json",
     "url": "https://emmy-gbc.vercel.app/"
+  },
+  "gameroy": {
+    "file": "gameroy.json",
+    "url": "https://github.com/Rodrigodd/gameroy"
   }
 }
