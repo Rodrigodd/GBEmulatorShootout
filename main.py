@@ -70,8 +70,8 @@ def checkFilter(input, filter_data):
         return True
     input = str(input)
 
-    # if there is at least one !QUERY, any emulator not int the negative query
-    # will be accepted
+    # if there is at least one !QUERY, a value not matching any of the negative
+    # querys will be accepted.
     out_filter = False
     for f in filter_data:
         if f.startswith("!"):
@@ -81,8 +81,8 @@ def checkFilter(input, filter_data):
     if out_filter:
         return True
 
-    # if there are not !QUERY, any emulator matching a query in be included,
-    # remaining will be filtered out.
+    # if there are no !QUERY, a value matching any of the querys will be
+    # accpeted.
     for f in filter_data:
         if not f.startswith("!"):
             if f in input:
@@ -94,7 +94,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--test', action='append', help="Filter for tests with keywords")
     parser.add_argument('--emulator', action='append', help="Filter to test only emulators with keywords")
-    parser.add_argument('--model', action='append', help="Filter to tests with model")
+    parser.add_argument('--model', action='append', help="Filter for tests of given model")
     parser.add_argument('--get-runtime', action='store_true')
     parser.add_argument('--get-startuptime', action='store_true')
     parser.add_argument('--dump-emulators-json', action='store_true')
@@ -165,7 +165,7 @@ if __name__ == "__main__":
             except Exception as e:
                 print(f'Exception while running {emulator}')
                 traceback.print_exc()
-                f.write("%s (sgb)<br>\n%s<br>\n" % (emulator, traceback.format_exc()))
+                f.write("%s: <br>\n<pre>%s</pre>\n<br>\n" % (emulator, traceback.format_exc()))
 
         f.write("</body></html>")
         sys.exit()
@@ -197,7 +197,6 @@ if __name__ == "__main__":
                     print("Emulator %s failed to run properly" % (emulator))
                     traceback.print_exc()
         emulator.undoSetup()
-
     emulators.sort(key=lambda emulator: len([result[0] for result in results[emulator].values() if result.result != "FAIL"]), reverse=True)
 
     for emulator in emulators:
