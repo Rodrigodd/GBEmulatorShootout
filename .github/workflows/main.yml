@@ -27,26 +27,49 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.x'
+
+      # Need by Browser-based emulators.
+      - uses: nanasess/setup-chromedriver@v2
+
+      # Install virtual audio device, avoid that some emulators crash.
+      # From https://github.com/actions/runner-images/issues/2528#issuecomment-766883233
+      - name: Install Scream
+        shell: powershell
+        run: |
+          Start-Service audio*
+          Invoke-WebRequest https://github.com/duncanthrax/scream/releases/download/3.6/Scream3.6.zip -OutFile C:\Scream3.6.zip
+          Extract-7Zip -Path C:\Scream3.6.zip -DestinationPath C:\Scream
+          $cert = (Get-AuthenticodeSignature C:\Scream\Install\driver\Scream.sys).SignerCertificate
+          $store = [System.Security.Cryptography.X509Certificates.X509Store]::new("TrustedPublisher", "LocalMachine")
+          $store.Open("ReadWrite")
+          $store.Add($cert)
+          $store.Close()
+          cd C:\Scream\Install\driver
+          C:\Scream\Install\helpers\devcon install Scream.inf *Scream
+
       - name: Add python required modules
         run: |
           python -m pip install -r requirements.txt
       - name: Check emulator startups
         run: |
-          python main.py --get-startuptime --emulator !mGBA --emulator !KiGB --emulator !Goomba --emulator '!No$gmb' --emulator !binjgb
+          python main.py --get-startuptime
+
       - name: Archive startup time result
         uses: actions/upload-artifact@v2
         with:
           name: startuptime
           path: startuptime.html
+
       - name: Run tests
         run: |
-          python main.py --emulator !mGBA --emulator !KiGB --emulator !Goomba --emulator '!No$gmb' --emulator !binjgb
+          python main.py
           python main.py --dump-tests-json --dump-emulators-json
+
       - name: Deploy pages
         run: |
           git config --global user.name "github actions"
           git config --global user.email "github@actions"
-          git clone --single-branch --branch gh-pages https://github.com/daid/GBEmulatorShootout.git pages
+          git clone --single-branch --branch gh-pages https://github.com/Rodrigodd/GBEmulatorShootout.git pages
           cp *.json pages/
           cd pages
           python build.py

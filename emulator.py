@@ -67,6 +67,7 @@ class Emulator:
         self.postWindowCreation()
         start_time = time.monotonic()
         result = None
+        screenshot = None
         while time.monotonic() - start_time < (test.runtime / self.speed) + self.startup_time + 5.0:
             time.sleep(0.1)
             screenshot = self.getScreenshot()
@@ -100,13 +101,14 @@ class Emulator:
             prev = screenshot
             if time.monotonic() - last_change > 10.0:
                 break
-            assert self.isProcessAlive(p) is None, "Process crashed?"
+            assert self.isProcessAlive(p), "Process crashed? (exit: %d)" % (self.returncode(p))
         if not os.path.exists(test.pass_result_filename):
             screenshot.save(test.pass_result_filename)
         self.endProcess(p)
         return last_change - start
 
     def measureStartupTime(self, *, model):
+        print(f'Measuring startup time of {self}')
         p = self.startProcess("startup_time_test.gb", model=model, required_features=set())
         if p is None:
             return None, None
@@ -115,18 +117,25 @@ class Emulator:
         while not self.isWindowOpen():
             time.sleep(0.01)
             if not self.isProcessAlive(p) or time.monotonic() - start_pre_window_time > 60.0:
-                print("Process gone or timeout")
+                screenshot = fullscreenScreenshot()
+                print("Window not found")
                 if self.isProcessAlive(p):
+                    print("Process timeout: %s" % (self.processOutput(p)))
                     self.endProcess(p)
-                return None, fullscreenScreenshot()
+                else:
+                    print("Process gone: %s" % (self.processOutput(p)))
+                return None, screenshot
         post_window_time = time.monotonic()
         print("Window found")
         while True:
             if not self.isProcessAlive(p) or time.monotonic() - post_window_time > 60.0:
-                print("Process gone or timeout: %s" % (self.processOutput(p)))
+                screenshot = fullscreenScreenshot()
                 if self.isProcessAlive(p):
+                    print("Process timeout: %s" % (self.processOutput(p)))
                     self.endProcess(p)
-                return None, fullscreenScreenshot()
+                else:
+                    print("Process gone: %s" % (self.processOutput(p)))
+                return None, screenshot
             screenshot = self.getScreenshot()
             if screenshot is None:
                 continue

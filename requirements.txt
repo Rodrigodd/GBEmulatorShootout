@@ -3,3 +3,4 @@ pillow
 requests
 pywin32
 selenium
+tqdm

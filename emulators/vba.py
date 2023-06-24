@@ -6,7 +6,7 @@ import shutil
 
 class VBA(Emulator):
     def __init__(self):
-        super().__init__("VisualBoyAdvance", "https://sourceforge.net/projects/", startup_time=0.6)
+        super().__init__("VisualBoyAdvance", "https://sourceforge.net/projects/vba", startup_time=0.6)
 
     def setup(self):
         download("https://sourceforge.net/projects/vba/files/latest/download", "downloads/vba.zip")
@@ -33,6 +33,33 @@ class VBAM(Emulator):
         download("https://gbdev.gg8.se/files/roms/bootroms/dmg_boot.bin", "emu/vba-m/dmg_boot.bin")
         download("https://gbdev.gg8.se/files/roms/bootroms/cgb_boot.bin", "emu/vba-m/cgb_boot.bin")
         download("https://gbdev.gg8.se/files/roms/bootroms/sgb_boot.bin", "emu/vba-m/sgb_boot.bin")
+
+        # disables "check for updates" modal window
+        subprocess.run([
+            "REG",
+            "ADD",
+            r"HKCU\SOFTWARE\visualboyadvance-m\VisualBoyAdvance-M\WinSparkle",
+            "/V",
+            "CheckForUpdates",
+            "/T",
+            "REG_SZ",
+            "/D",
+            "0",
+            "/F",
+        ])
+        subprocess.run([
+            "REG",
+            "ADD",
+            r"HKCU\SOFTWARE\visualboyadvance-m\VisualBoyAdvance-M\WinSparkle",
+            "/V",
+            "DidRunOnce",
+            "/T",
+            "REG_SZ",
+            "/D",
+            "1",
+            "/F",
+        ])
+
 
     def startProcess(self, rom, *, model, required_features):
         if model == DMG:

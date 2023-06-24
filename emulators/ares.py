@@ -35,9 +35,8 @@ class Ares(Emulator):
         screenshot = getScreenshot(self.title_check)
         if screenshot is None:
             return None
-        screenshot = screenshot.reduce(3)
+        screenshot = screenshot.resize((160, 144), PIL.Image.NEAREST)
         if not self.cgb:
             screenshot = screenshot.convert(mode="L", dither=PIL.Image.NONE)
             screenshot = PIL.ImageOps.autocontrast(screenshot)
-            screenshot.save("tmp.png")
         return screenshot
