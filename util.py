@@ -1,4 +1,3 @@
-import shutil
 import pyautogui
 import requests
 import os
@@ -20,29 +19,44 @@ def setupMesa(path):
     os.system(fr'mklink "{os.path.join(path, "opengl32.dll")}" "{os.path.join(dest, "opengl32.dll")}"')
     os.system(fr'mklink "{os.path.join(path, "libglapi.dll")}" "{os.path.join(dest, "libglapi.dll")}"')
 
-def download(url, filename, fake_headers=False):
-    if not os.path.exists(filename):
-        os.makedirs(os.path.dirname(filename), exist_ok=True)
-        print("Downloading %s" % (url))
-        headers = {}
-        if fake_headers:
-            headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36'
-        r = requests.get(url, allow_redirects=True, headers=headers, stream=True)
+def download(url, filename, fake_headers=False, max_retries=5):
+    if os.path.exists(filename):
+        return
 
-        total_size = int(r.headers.get("Content-Length", 0))
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    print("Downloading %s" % (url))
+    headers = {}
+    if fake_headers:
+        headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.146 Safari/537.36'
 
-        bar = tqdm(total=total_size, unit='iB', unit_scale=True)
-        
-        tempname = filename + '.downloading'
+    last_exception = ValueError("max_retries must be greater than 0")
+
+    for _ in range(max_retries):
         try:
-            with open(tempname, 'wb') as f:
-                for chunk in r.iter_content(chunk_size=1024):
-                    f.write(chunk)
-                    bar.update(len(chunk))
-            os.rename(tempname, filename)
-        finally:
-            if os.path.exists(tempname):
-                os.remove(tempname)
+            r = requests.get(url, allow_redirects=True, headers=headers, stream=True)
+
+            total_size = int(r.headers.get("Content-Length", 0))
+
+            bar = tqdm(total=total_size, unit='iB', unit_scale=True)
+            
+            tempname = filename + '.downloading'
+            try:
+                with open(tempname, 'wb') as f:
+                    for chunk in r.iter_content(chunk_size=1024):
+                        f.write(chunk)
+                        bar.update(len(chunk))
+                os.rename(tempname, filename)
+                return
+            finally:
+                if os.path.exists(tempname):
+                    os.remove(tempname)
+        except Exception as e:
+            last_exception = e
+            print("Download failed:", str(e))
+            print("Retrying...")
+
+    print("Max retries exceeded. Download failed.")
+    raise last_exception
 
 def downloadGithubRelease(repo, filename, *, filter=lambda n: "win" in n, allow_prerelease=False):
     if not os.path.exists(filename):
